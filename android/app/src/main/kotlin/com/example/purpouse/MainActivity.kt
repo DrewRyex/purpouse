@@ -1,4 +1,4 @@
-package com.example.purpouse
+package com.ryex.purpouse
 
 import io.flutter.embedding.android.FlutterActivity
 
