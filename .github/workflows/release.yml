@@ -54,5 +54,5 @@ jobs:
       - name: Run Fastlane Android Distribute to Firebase
         run: |
           cd android
-          VERSION=$(grep 'version:' ../pubspec.yaml | cut -d+ -f1 | cut -d: -f2 | tr -d ' ')
-          bundle exec fastlane distribute app_id: "${{ secrets.FIREBASE_ANDROID_APP_ID }}" version: $VERSION
+          VERSION=$(grep 'version:' ../pubspec.yaml | cut -d+ -f1 | cut -d: -f2 | tr -d ' ' | xargs)
+          bundle exec fastlane distribute app_id:"${{ secrets.FIREBASE_ANDROID_APP_ID }}" version:"$VERSION"
