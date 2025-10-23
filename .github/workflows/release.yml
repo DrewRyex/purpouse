@@ -32,7 +32,8 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: ' 3.27.2'
+          flutter-version: ' 3.22.6'
+          channel: 'stable'
 
       - name: Setup Android Keystore for Signing
         run: |
