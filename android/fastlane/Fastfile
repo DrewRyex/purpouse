@@ -36,19 +36,19 @@ platform :android do
     upload_to_play_store
   end
 
-desc "Deploys a new build to Firebase App Distribution for internal testing."
-lane :distribute do |options|
-    sh("cd ../.. && flutter clean")
-    sh("cd ../.. && flutter pub get")
-    sh("cd ../.. && flutter build apk --release")
-    APK_PATH = "../../build/app/outputs/apk/release/app-release.apk"
+  desc "Deploys a new build to Firebase App Distribution for internal testing."
+  lane :distribute do |options|
+      sh("cd ../.. && flutter clean")
+      sh("cd ../.. && flutter pub get")
+      sh("cd ../.. && flutter build apk --release")
+      APK_PATH = "../../build/app/outputs/apk/release/app-release.apk"
 
-    firebase_app_distribution(
-        app: options[:app_id],
-        testers: "andrea.riezzo@kalpa.it",
-        release_notes: "Build: #{options[:version]} - Lots of amazing new features to test out!",
-        apk_path: APK_PATH
-    )
-end
+      firebase_app_distribution(
+          app: options[:app_id],
+          testers: "andrea.riezzo@kalpa.it",
+          release_notes: "Build: #{options[:version]} - Lots of amazing new features to test out!",
+          apk_path: APK_PATH
+      )
+  end
 
 end
