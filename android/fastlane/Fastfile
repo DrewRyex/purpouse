@@ -36,19 +36,19 @@ platform :android do
     upload_to_play_store
   end
 
-  desc "Purpouse CI/CD"
-  lane :distribute do
-      #build_android_app(task: ":app:assembleDebug")
-      sh("cd ../.. && flutter clean")
-      sh("cd ../.. && flutter pub get")
-      sh("cd ../.. && flutter build apk --release")
-      APK_PATH = "../build/app/outputs/apk/release/app-release.apk"
-      release = firebase_app_distribution(
-          app: "1:182601458343:android:purpouse-da298",
-          testers: "andrea.riezzo@kalpa.it",
-          release_notes: "Lots of amazing new features to test out!",
-          apk_path: APK_PATH
-      )
-  end
+desc "Deploys a new build to Firebase App Distribution for internal testing."
+lane :distribute do |options|
+    sh("cd ../.. && flutter clean")
+    sh("cd ../.. && flutter pub get")
+    sh("cd ../.. && flutter build apk --release")
+    APK_PATH = "../../build/app/outputs/apk/release/app-release.apk"
+
+    firebase_app_distribution(
+        app: options[:app_id],
+        testers: "andrea.riezzo@kalpa.it",
+        release_notes: "Build: #{options[:version]} - Lots of amazing new features to test out!",
+        apk_path: APK_PATH # Indica a Fastlane dove trovare l'APK firmato
+    )
+end
 
 end
