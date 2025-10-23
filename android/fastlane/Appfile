@@ -1,0 +1,2 @@
+json_key_file("/Users/ariezzo/Documents/personal/flutter/_deploy_keys/purpouse/purpouse-990d16d2e5a1.json") # Path to the json secret file - Follow https://docs.fastlane.tools/actions/supply/#setup to get one
+package_name("com.ryex.purpouse") # e.g. com.krausefx.app

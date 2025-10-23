@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "182601458343",
+    "project_id": "purpouse-da298",
+    "storage_bucket": "purpouse-da298.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:182601458343:android:2d5ee141f5a49346ecf182",
+        "android_client_info": {
+          "package_name": "com.ryex.purpouse"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCrqBzN1ShAcvYGt90dVJwJ4Z2sQ8eLZgs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
