@@ -30,8 +30,7 @@ jobs:
       - name: Install Fastlane Gems
         run: |
           cd android
-          bundle clean --force
-          bundle install
+          bundle install --jobs 4 --retry 3
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
