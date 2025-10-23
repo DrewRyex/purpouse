@@ -1,0 +1,48 @@
+name: Flutter CI/CD Development Release
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  firebase_android_deploy:
+    if: github.ref == 'refs/heads/develop' 
+      && contains(github.event.head_commit.message, 'release (develop): version')
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Ruby for Fastlane
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.3.7'
+          bundler-cache: true
+          cache-version: 1
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ' 3.27.2'
+
+      - name: Setup Android Keystore for Signing
+        run: |
+          cd android
+          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > app/release.jks
+          echo "storeFile=app/release.jks" > key.properties
+          echo "keyAlias=${{ secrets.KEY_ALIAS }}" >> key.properties
+          echo "storePassword=${{ secrets.KEYSTORE_PASSWORD }}" >> key.properties
+          echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> key.properties 
+
+      - name: Setup Firebase SA Key
+        run: |
+          echo '${{ secrets.GCP_SA_KEY }}' > /tmp/service_account_key.json
+          echo "GOOGLE_APPLICATION_CREDENTIALS=/tmp/service_account_key.json" >> $GITHUB_ENV
+
+      - name: Run Fastlane Android Distribute to Firebase
+        run: |
+          cd android
+          VERSION=$(grep 'version:' ../pubspec.yaml | cut -d+ -f1 | cut -d: -f2 | tr -d ' ')
+          bundle exec fastlane distribute app_id: "${{ secrets.FIREBASE_ANDROID_APP_ID }}" version: $VERSION
