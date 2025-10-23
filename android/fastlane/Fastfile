@@ -47,7 +47,7 @@ lane :distribute do |options|
         app: options[:app_id],
         testers: "andrea.riezzo@kalpa.it",
         release_notes: "Build: #{options[:version]} - Lots of amazing new features to test out!",
-        apk_path: APK_PATH # Indica a Fastlane dove trovare l'APK firmato
+        apk_path: APK_PATH
     )
 end
 
