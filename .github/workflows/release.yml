@@ -7,13 +7,20 @@ on:
 
 jobs:
   firebase_android_deploy:
-    if: github.ref == 'refs/heads/develop' 
-      && contains(github.event.head_commit.message, 'release (develop): version')
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
+
+      - name: Check Commit Message for Release Trigger
+        run: |
+          if echo "${{ github.event.head_commit.message }}" | grep -q "release (develop): version"; then
+            echo "::notice file=trigger.log,line=1::Commit message contains release trigger. Starting deployment."
+          else
+            echo "::notice file=trigger.log,line=1::Commit message does NOT contain release trigger. Skipping deployment."
+            exit 0 # Esci dal job con successo (ignorando i passaggi successivi)
+          fi
 
       - name: Setup Ruby for Fastlane
         uses: ruby/setup-ruby@v1
